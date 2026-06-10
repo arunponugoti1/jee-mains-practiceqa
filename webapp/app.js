@@ -6,7 +6,7 @@
 
 const STORE_KEY = "jee_trainer_v3";
 let state = loadState();
-let view = "practice";   // "practice" | "drill" | "pyq"
+let view = "drill";   // "drill" | "pyq"
 
 function loadState() {
   try {
@@ -31,9 +31,8 @@ const app = document.getElementById("app");
 function tabs() {
   const t = (v, label) => `<button class="tab ${view === v ? "active" : ""}" onclick="setView('${v}')">${label}</button>`;
   return `<div class="tabs">
-    ${t("practice", "🎯 Practice")}
-    ${t("drill", "🔥 Drill 100")}
-    ${t("pyq", "📜 PYQs")}
+    ${t("drill", "🔥 Practice (80 Qs)")}
+    ${t("pyq", "📜 Previous Years")}
   </div>`;
 }
 
@@ -53,6 +52,7 @@ function render() {
 
   app.innerHTML = `
     ${tabs()}
+    ${(i === 0 && !guessed) ? aboutCard() : ""}
     ${modelCard()}
     ${progress(L)}
     <div class="card">
