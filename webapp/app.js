@@ -244,8 +244,29 @@ function renderSummary(L) {
         <button class="btn btn-primary" onclick="exportFeedback()">⤓ Export feedback</button>
       </div>
     </div>
+    ${aboutCard()}
     ${footer()}
   `;
+}
+
+// Shown on the results page — purpose, method, and the path to the outcome.
+function aboutCard() {
+  return `<div class="about">
+    <h2>Why this trainer works — and how to use it</h2>
+    <div class="about-row">
+      <span class="about-k">🎯 The purpose</span>
+      <span>JEE doesn't reward memorizing answers — it rewards spotting the trap. Most students freeze when a familiar concept is dressed up a new way. This trainer builds the one skill that doesn't break under disguise: <b>recognizing the examiner's pattern</b> before you compute.</span>
+    </div>
+    <div class="about-row">
+      <span class="about-k">🛠️ How it was built</span>
+      <span>We reverse-engineered real JEE Main &amp; Advanced questions into <b>8 recurring traps</b> — the examiner's actual algorithm. Every one of the 80 questions is tagged with its trap, a topper's thinking-script, and the common mistake. Each answer is <b>machine-verified by complex-number arithmetic</b> and reviewed by a subject expert — not typed by hand.</span>
+    </div>
+    <div class="about-row">
+      <span class="about-k">🚀 If you follow it</span>
+      <span>Name the trap <i>before</i> you solve. Drill all 80, redo every miss, and push your <b>trap-recognition above ~80%</b>. Students who internalize the patterns — not the answers — realistically target <b>35–45 on a 50-mark paper</b>. The marks follow the recognition.</span>
+    </div>
+    <div class="about-tag">Built to teach you to think — so no disguise can surprise you.</div>
+  </div>`;
 }
 
 function restart() {
