@@ -6,7 +6,7 @@
 
 const STORE_KEY = "jee_trainer_v3";
 let state = loadState();
-let view = "drill";   // "drill" | "pyq"
+let view = "about";   // "about" | "drill" | "pyq"
 
 function loadState() {
   try {
@@ -31,13 +31,15 @@ const app = document.getElementById("app");
 function tabs() {
   const t = (v, label) => `<button class="tab ${view === v ? "active" : ""}" onclick="setView('${v}')">${label}</button>`;
   return `<div class="tabs">
-    ${t("drill", "🔥 Practice (80 Qs)")}
+    ${t("about", "🏠 About")}
+    ${t("drill", "🔥 Practice")}
     ${t("pyq", "📜 Previous Years")}
   </div>`;
 }
 
 // ---- Main render ----
 function render() {
+  if (view === "about") return renderAbout();
   if (view === "pyq") return renderPYQ();
   const L = list();
   const i = curIdx();
@@ -52,7 +54,6 @@ function render() {
 
   app.innerHTML = `
     ${tabs()}
-    ${(i === 0 && !guessed) ? aboutCard() : ""}
     ${modelCard()}
     ${progress(L)}
     <div class="card">
@@ -249,7 +250,34 @@ function renderSummary(L) {
   `;
 }
 
-// Shown on the results page — purpose, method, and the path to the outcome.
+// Dedicated front page — always reachable via the About tab.
+function renderAbout() {
+  app.innerHTML = `
+    ${tabs()}
+    <div class="hero">
+      <h1>JEE <span>Mindset</span> Trainer</h1>
+      <p class="hero-sub">Don't memorize answers. Learn to <b>recognize the examiner's trap</b> — the one skill that survives every disguise.</p>
+      <button class="btn btn-primary hero-cta" onclick="setView('drill')">🔥 Start practicing — 80 questions →</button>
+    </div>
+    ${aboutCard()}
+    <div class="card">
+      <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:.7px;color:var(--accent-2);margin-bottom:10px">
+        The 8 traps you'll learn to spot</h3>
+      ${Object.keys(TRAPS).map(t => `<div class="trap-line">
+        <span class="trap-tag" style="background:${TRAPS[t].color}">${t}</span>
+        <span><b>${TRAPS[t].name}</b> — ${TRAPS[t].hint}</span>
+      </div>`).join("")}
+    </div>
+    <div class="card" style="text-align:center">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Concept: <b style="color:var(--text)">${CONCEPT.subject} · ${CONCEPT.title}</b></p>
+      <button class="btn btn-primary" onclick="setView('drill')">Begin →</button>
+    </div>
+    ${footer()}
+  `;
+  window.scrollTo({ top: 0 });
+}
+
+// Reusable purpose/method/outcome block (used on the About page and results page).
 function aboutCard() {
   return `<div class="about">
     <h2>Why this trainer works — and how to use it</h2>
